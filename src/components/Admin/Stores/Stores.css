@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.stores-page {
+  padding: 2rem;
+  background: transparent;
+}
+
+.page-header {
+  background: #292929;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-header h1 {
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.page-header .action-button {
+  background: #333333;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.page-header .action-button:hover {
+  background: #404040;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.store-card {
+  background: #292929;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.store-name {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.store-id {
+  color: #ffffff;
+  opacity: 0.7;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.info-label {
+  color: #ffffff;
+  opacity: 0.7;
+}
+
+.info-value {
+  color: #ffffff;
+}
+
+.store-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.action-button {
+  background: #333333;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.action-button:hover {
+  background: #404040;
+}
+
+.view-btn {
+  background: #333333;
+  color: #ffffff;
+}
+
+.view-btn:hover {
+  background: #404040;
+}
+
+.edit-btn {
+  background: #333333;
+  color: #ffffff;
+}
+
+.edit-btn:hover {
+  background: #404040;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-active {
+  background: #333333;
+  color: #4CAF50;
+}
+
+.status-inactive {
+  background: #333333;
+  color: #F44336;
+}
+
+.page-header .material-icons {
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+.close-icon .material-icons {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .stores-page {
+    padding: 1rem;
+  }
+  
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #292929;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  padding: 2rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-header h2 {
+  color: #ffffff;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.form-group input {
+  background: #333333;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.cancel-button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.save-button {
+  background: #404040;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.save-button:hover {
+  background: #4a4a4a;
+}
+
+.cancel-button:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+} 
