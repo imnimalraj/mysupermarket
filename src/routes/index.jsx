@@ -1,38 +1,39 @@
-import { createBrowserRouter } from 'react-router-dom';
-import Layout from '../components/Layout/Layout';
-import AdminDashboard from '../components/Dashboard/AdminDashboard';
-import UsersPage from '../components/Admin/UsersPage';
-import StoresPage from '../components/Admin/StoresPage';
-import ApprovalsPage from '../components/Admin/Approvals/ApprovalsPage';
-import ProtectedRoute from '../components/Auth/ProtectedRoute';
+import { createBrowserRouter } from "react-router-dom";
+// import Layout from '../components/Layout/Layout';
+import AdminDashboard from "../components/Dashboard/AdminDashboard";
+import UsersPage from "../components/Admin/UsersPage";
+import StoresPage from "../components/Admin/StoresPage";
+import ApprovalsPage from "../components/Admin/Approvals/ApprovalsPage";
+import ProtectedRoute from "../components/Auth/ProtectedRoute";
+import Layout from "../components/layout/Layout";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Layout />,
     children: [
       {
-        path: 'admin',
-        element: <ProtectedRoute allowedRoles={['ADMIN']} />,
+        path: "admin",
+        element: <ProtectedRoute allowedRoles={["ADMIN"]} />,
         children: [
           {
-            path: 'dashboard',
-            element: <AdminDashboard />
+            path: "dashboard",
+            element: <AdminDashboard />,
           },
           {
-            path: 'users',
-            element: <UsersPage />
+            path: "users",
+            element: <UsersPage />,
           },
           {
-            path: 'stores',
-            element: <StoresPage />
+            path: "stores",
+            element: <StoresPage />,
           },
           {
-            path: 'approvals',
-            element: <ApprovalsPage />
-          }
-        ]
-      }
-    ]
-  }
-]); 
+            path: "approvals",
+            element: <ApprovalsPage />,
+          },
+        ],
+      },
+    ],
+  },
+]);
