@@ -49,12 +49,7 @@ export const authService = {
   }),
 
   getAllUsers: () => fetchWithAuth(`${API_ENDPOINTS.USERS}`),
-
-  getUser: (id) => fetchWithAuth(`${API_ENDPOINTS.USERS}/${id}`),
-
-  validateToken: (token) => fetchWithAuth(`${API_ENDPOINTS.AUTH}/validate`, {
-    headers: { Authorization: `Bearer ${token}` }
-  })
+  getUser: (id) => fetchWithAuth(`${API_ENDPOINTS.USERS}/${id}`)
 };
 
 // Store service
