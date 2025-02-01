@@ -1,108 +1,92 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
-import { ProductProvider } from "./contexts/ProductContext";
-import { InventoryProvider } from "./contexts/InventoryContext";
-import { OrderProvider } from "./contexts/OrderContext";
-import { SidebarProvider } from "./contexts/SidebarContext";
 import Layout from "./components/layout/Layout";
 import Login from "./components/Auth/Login";
 import AdminDashboard from "./components/Dashboard/AdminDashboard";
 import ShopkeeperDashboard from "./components/Dashboard/ShopkeeperDashboard";
-import ProductsPage from "./components/Products/ProductsPage";
-import InventoryPage from "./components/Inventory/InventoryPage";
-import OrdersPage from "./components/Orders/Orders";
-import BillingPage from "./components/Billing/BillingPage";
-import UserProfile from "./components/Profile/UserProfile";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
-import StoresPage from "./components/Admin/Stores/StoresPage";
-import ApprovalsPage from "./components/Admin/Approvals/ApprovalsPage";
-import UsersPage from "./components/Admin/Users/UsersPage";
-import "./App.css";
 
 function App() {
+  const [authToken, setAuthToken] = useState(localStorage.getItem("authToken"));
+  const [role, setRole] = useState(localStorage.getItem("userRole"));
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
+
+  useEffect(() => {
+    // Check if the user is logged in by checking for a token in localStorage
+    const token = localStorage.getItem("authToken");
+    const userRole = localStorage.getItem("userRole");
+
+    if (token) {
+      setAuthToken(token);
+      setRole(userRole); // Set the role based on the stored userRole
+    }
+
+    setIsLoading(false); // Set loading to false after check is complete
+  }, []);
+
+  const handleLoginSuccess = (token, userRole) => {
+    setAuthToken(token);
+    setRole(userRole);
+    localStorage.setItem("authToken", token); // Store token in localStorage
+    localStorage.setItem("userRole", userRole); // Store user role in localStorage
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Optional: Add a loading spinner or message
+  }
+
   return (
     <AuthProvider>
       <Router>
         <Routes>
           {/* Public Route */}
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
 
-          {/* Admin Routes */}
-          <Route
-            path="/admin/*"
-            element={
-              <ProtectedRoute allowedRoles={["ADMIN"]}>
-                <SidebarProvider>
-                  <ProductProvider>
-                    <InventoryProvider>
-                      <OrderProvider>
-                        <Layout>
-                          <Routes>
-                            <Route
-                              path="dashboard"
-                              element={<AdminDashboard />}
-                            />
-                            <Route path="stores" element={<StoresPage />} />
-                            <Route path="products" element={<ProductsPage />} />
-                            <Route path="orders" element={<OrdersPage />} />
-                            <Route
-                              path="approvals"
-                              element={<ApprovalsPage />}
-                            />
-                            <Route path="profile" element={<UserProfile />} />
-                            <Route path="users" element={<UsersPage />} />
-                          </Routes>
-                        </Layout>
-                      </OrderProvider>
-                    </InventoryProvider>
-                  </ProductProvider>
-                </SidebarProvider>
-              </ProtectedRoute>
-            }
-          />
+          {/* Conditionally Render Routes Based on Role */}
+          {authToken && role ? (
+            <>
+              {/* Admin Routes */}
+              {role === "ADMIN" && (
+                <Route
+                  path="/admin/*"
+                  element={
+                    <ProtectedRoute allowedRoles={["ADMIN"]} authToken={authToken}>
+                      <Layout>
+                        <Routes>
+                          <Route path="dashboard" element={<AdminDashboard />} />
+                        </Routes>
+                      </Layout>
+                    </ProtectedRoute>
+                  }
+                />
+              )}
 
-          {/* Shopkeeper Routes */}
-          <Route
-            path="/shopkeeper/*"
-            element={
-              <ProtectedRoute allowedRoles={["SHOPKEEPER"]}>
-                <SidebarProvider>
-                  <ProductProvider>
-                    <InventoryProvider>
-                      <OrderProvider>
-                        <Layout>
-                          <Routes>
-                            <Route
-                              path="dashboard"
-                              element={<ShopkeeperDashboard />}
-                            />
-                            <Route path="products" element={<ProductsPage />} />
-                            <Route
-                              path="inventory"
-                              element={<InventoryPage />}
-                            />
-                            <Route path="orders" element={<OrdersPage />} />
-                            <Route path="billing" element={<BillingPage />} />
-                            <Route path="profile" element={<UserProfile />} />
-                          </Routes>
-                        </Layout>
-                      </OrderProvider>
-                    </InventoryProvider>
-                  </ProductProvider>
-                </SidebarProvider>
-              </ProtectedRoute>
-            }
-          />
+              {/* Shopkeeper Routes */}
+              {role === "SHOPKEEPER" && (
+                <Route
+                  path="/shopkeeper/*"
+                  element={
+                    <ProtectedRoute allowedRoles={["SHOPKEEPER"]} authToken={authToken}>
+                      <Layout>
+                        <Routes>
+                          <Route path="dashboard" element={<ShopkeeperDashboard />} />
+                        </Routes>
+                      </Layout>
+                    </ProtectedRoute>
+                  }
+                />
+              )}
 
-          {/* Default Route */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
+              {/* Redirect to appropriate dashboard if authenticated */}
+              <Route path="/" element={<Navigate to={`/${role.toLowerCase()}/dashboard`} replace />} />
+            </>
+          ) : (
+            // If not logged in, redirect to login
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          )}
 
-          {/* Catch all route */}
+          {/* Catch-all route for non-existent paths */}
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Router>
